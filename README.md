@@ -1,140 +1,135 @@
-# Card Name Fit
+# Arabic Name Transliterator
 
-A simple PHP library that solves the headache of fitting names on cards and badges. If you've ever struggled with names that are too long for credit cards, ID badges, or passport printing, this is your solution.
+A powerful PHP library for transliterating Arabic names to English with high accuracy. Perfect for ID systems, passports, and any application needing reliable Arabic-to-English name conversion.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/omar-haris/card-name-fit.svg)](https://packagist.org/packages/omar-haris/card-name-fit)
-[![Tests](https://github.com/omar-haris/card-name-fit/actions/workflows/tests.yml/badge.svg)](https://github.com/omar-haris/card-name-fit/actions/workflows/tests.yml)
-[![PHP Version](https://img.shields.io/packagist/php-v/omar-haris/card-name-fit.svg)](https://packagist.org/packages/omar-haris/card-name-fit)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/omar-haris/arabic-name-transliterator.svg)](https://packagist.org/packages/omar-haris/arabic-name-transliterator)
+[![Tests](https://github.com/omar-haris/arabic-name-transliterator/actions/workflows/tests.yml/badge.svg)](https://github.com/omar-haris/arabic-name-transliterator/actions/workflows/tests.yml)
+[![PHP Version](https://img.shields.io/packagist/php-v/omar-haris/arabic-name-transliterator.svg)](https://packagist.org/packages/omar-haris/arabic-name-transliterator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Total Downloads](https://img.shields.io/packagist/dt/omar-haris/card-name-fit.svg)](https://packagist.org/packages/omar-haris/card-name-fit)
+[![Total Downloads](https://img.shields.io/packagist/dt/omar-haris/arabic-name-transliterator.svg)](https://packagist.org/packages/omar-haris/arabic-name-transliterator)
 
 ## Why This Library?
 
-We've all seen ID cards with awkwardly truncated names or ridiculously small fonts trying to fit long names. This library fixes that problem with intelligent name formatting for fixed-width spaces.
+Transliterating Arabic names to English is challenging due to multiple correct spellings and regional variations. This library solves that problem with:
 
-It's especially useful for:
-- Card printing (credit, debit, ID, membership)
-- Name badges and tags
-- Passports and government IDs 
-- Any system with character limits for names
+- **Accurate transliteration** that follows standard conventions
+- **Support for names with diacritics** (harakat)
+- **Regional variations** (currently Iraqi mapping, with extensibility for other regions)
+- **Smart word-level and character-level mapping**
+- **Full customization** options to meet your specific needs
 
 ## Key Features
 
-- **Smart formatting** that preserves readability
-- **Handles both English and Arabic** names with different strategies
-- **Adjustable character limits** to match your exact requirements
-- **UTF-8 support** for international names
-- **No external dependencies** besides PHP's mbstring
+- **Dictionary-based approach** for common names and words
+- **Fallback letter-by-letter mapping** for names not in the dictionary
+- **Customizable regional mappings** for different Arabic dialects and standards
+- **Clean handling of diacritics** (harakat) and special characters
+- **Well-documented code** with comprehensive test coverage
+- **Zero external dependencies** besides PHP's mbstring
 
 ## Installation
 
-Just run:
+Simply run:
 
 ```bash
-composer require omar-haris/card-name-fit
+composer require omar-haris/arabic-name-transliterator
 ```
 
 ## Basic Usage
 
 ```php
-use CardNameFit\NameFormatter;
+use ArabicNameTransliterator\Transliterator;
+use ArabicNameTransliterator\Mapping\IraqMapping;
 
-// Create a formatter with 20-character limit
-$formatter = new NameFormatter(20);
+// Create a transliterator with Iraqi name mapping
+$transliterator = new Transliterator(new IraqMapping());
 
-// Format some names
-echo $formatter->format('John William Smith');             // "John William Smith"
-echo $formatter->format('John William Alexander Smith');   // "John William Smith"
+// Transliterate names
+echo $transliterator->transliterate('محمد');                // "Muhammad"
+echo $transliterator->transliterate('عبد الرحمن');          // "Abd Al-Rahman"
+echo $transliterator->transliterate('فاطمة الزهراء');       // "Fatimah Al-Zahraa"
 
-// Works with Arabic names too
-echo $formatter->format('محمد عبد الرحمن العبد الله');     // "محمد عبد الرحمن"
+// Works with diacritics
+echo $transliterator->transliterate('مُحَمَّد');            // "Muhammad"
+
+// Disable capitalization
+echo $transliterator->transliterate('محمد علي', false);     // "muhammad ali"
 ```
 
-## Formatting Strategies
+## Advanced Usage
 
-### For English Names
+### Creating Custom Mappings
 
-The library offers two approaches:
-
-#### 1. GREEDY (default)
-
-Keeps full middle names when possible, drops them when needed. People generally prefer seeing their complete names rather than initials.
+You can create your own mappings by extending `BaseMapping`:
 
 ```php
-// With 20 character limit
-$formatter = new NameFormatter(20, NameFormatter::ENGLISH_GREEDY);
+use ArabicNameTransliterator\Mapping\BaseMapping;
 
-echo $formatter->format('John Smith');                   // "John Smith"
-echo $formatter->format('John William Smith');           // "John William Smith"
-echo $formatter->format('John William Alexander Smith'); // "John William Smith" 
-                                                         // (drops "Alexander")
+class EgyptianMapping extends BaseMapping
+{
+    public function getFullWordMap(): array
+    {
+        return [
+            'محمد' => 'Mohamed',  // Egyptian spelling (vs. Iraqi "Muhammad")
+            'عبد الرحمن' => 'Abdelrahman', // Different format
+            // Add more mappings...
+        ];
+    }
+    
+    public function getLetterMap(): array
+    {
+        return [
+            'ج' => 'g',  // In Egyptian dialect, ج is pronounced as "g" not "j"
+            // Define the rest of your letter map...
+        ];
+    }
+}
+
+$egyptianTransliterator = new Transliterator(new EgyptianMapping());
 ```
 
-#### 2. DENSE
+### Extending Existing Mappings
 
-Ensures every name part appears, at least as an initial. Better when all name components must be represented.
+You can also extend an existing mapping:
 
 ```php
-// With 20 character limit
-$formatter = new NameFormatter(20, NameFormatter::ENGLISH_DENSE);
+use ArabicNameTransliterator\Mapping\IraqMapping;
 
-echo $formatter->format('John William Alexander Smith'); // "John W. A. Smith"
-                                                         // (includes all parts)
+class CustomIraqMapping extends IraqMapping
+{
+    public function getFullWordMap(): array
+    {
+        $originalMap = parent::getFullWordMap();
+        
+        // Add or override specific entries
+        $customEntries = [
+            'محمد' => 'Mohammed', // Override the default 'Muhammad'
+            'عبد العزيز' => 'Abdul Aziz', // New entry
+        ];
+        
+        return array_merge($originalMap, $customEntries);
+    }
+}
 ```
 
-### For Arabic Names
+## How It Works
 
-Arabic names use a simple left-to-right approach, preserving whole words since initials don't make sense in Arabic.
+The transliteration process follows these steps:
 
-```php
-$formatter = new NameFormatter(25);
+1. The input Arabic text is split into words
+2. Each word is checked against the full-word dictionary
+   - If found, the predefined transliteration is used
+   - If not found, the word is transliterated letter by letter
+3. The transliterated words are joined with spaces
+4. By default, each word is capitalized (can be disabled)
 
-echo $formatter->format('محمد عبد الرحمن العبد الله'); // "محمد عبد الرحمن"
-```
+## Available Mappings
 
-## Edge Cases Handled
+Currently, the library includes:
 
-### Very Long Names
+- `IraqMapping`: Suitable for Iraqi Arabic names, following common standards for official documents
 
-The library handles unusually long names gracefully:
-
-```php
-$formatter = new NameFormatter(20);
-
-// Long last name
-echo $formatter->format('John Wolfeschlegelsteinhausenbergerdorff');
-// "John Wolfeschlegelst"
-```
-
-### Whitespace Cleanup
-
-No need to worry about extra spaces or inconsistent formatting:
-
-```php
-$formatter = new NameFormatter(20);
-echo $formatter->format('  John   William   Smith  '); // "John William Smith"
-```
-
-## Configuration
-
-```php
-/**
- * @param int    $maxLength   Maximum allowed characters (≥ 1)
- * @param string $englishMode Strategy: ENGLISH_GREEDY or ENGLISH_DENSE
- * @param string $encoding    Character encoding (default: UTF-8)
- */
-public function __construct(
-    int    $maxLength   = 35,
-    string $englishMode = self::ENGLISH_GREEDY,
-    string $encoding    = 'UTF-8'
-)
-```
-
-## Security & Compliance
-
-This library only formats text - it doesn't store or transmit any personal data. It's designed with:
-- GDPR considerations (no data retention)
-- PCI DSS compatibility (no cardholder data storage)
+More regional mappings will be added in future releases. Contributions are welcome!
 
 ## Requirements
 
@@ -150,4 +145,5 @@ MIT License. See the [LICENSE](LICENSE.md) file.
 - [Omar Haris](https://github.com/omar-haris)
 
 <!-- These keywords help with SEO but are invisible to users -->
-<meta name="keywords" content="name formatting, ID card printing, credit card personalization, badge printing, PHP library, Arabic name formatting, card embossing, fixed-width name display, name truncation, smart name shortening">
+<meta name="keywords" content="arabic transliteration, name transliteration, arabic to english, arabic names, name conversion, PHP library, Iraq names, arabic to latin, name standardization, identity documents">
+# arabic-name-transliterator
