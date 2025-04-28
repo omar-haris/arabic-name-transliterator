@@ -138,7 +138,7 @@ This library only formats text - it doesn't store or transmit any personal data.
 
 ## Requirements
 
-- PHP 8.1+
+- PHP 8.3+
 - mbstring extension
 
 ## License
