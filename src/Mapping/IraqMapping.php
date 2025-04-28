@@ -90,6 +90,7 @@ class IraqMapping extends BaseMapping
             'الرحمن'      => 'Al-Rahman',
             'العظيم'      => 'Al-Azeem',
             'الزهرا'      => 'Al-Zahraa',
+            'احمد'        =>  'Ahmad',
 
             // Compound "Abd + X" forms
             'عبدالله'     => 'Abdullah',
