@@ -146,4 +146,3 @@ MIT License. See the [LICENSE](LICENSE.md) file.
 
 <!-- These keywords help with SEO but are invisible to users -->
 <meta name="keywords" content="arabic transliteration, name transliteration, arabic to english, arabic names, name conversion, PHP library, Iraq names, arabic to latin, name standardization, identity documents">
-# arabic-name-transliterator

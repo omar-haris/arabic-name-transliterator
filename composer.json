@@ -1,6 +1,6 @@
 {
-  "name": "omar-haris/card-name-fit",
-  "description": "PHP library to squeeze Arabic or English personal names to a fixed length for ID, bank or payment cards.",
+  "name": "omar-haris/arabic-name-transliterator",
+  "description": "A PHP library to transliterate Arabic names to English names can handle Arabic names with diacritics and special characters.",
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -15,12 +15,12 @@
   },
   "autoload": {
     "psr-4": {
-      "CardNameFit\\": "src/"
+      "ArabicNameTransliterator\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "CardNameFit\\Tests\\": "tests/"
+      "ArabicNameTransliterator\\Tests\\": "tests/"
     }
   },
   "require-dev": {
@@ -29,31 +29,37 @@
   "scripts": {
     "test": "phpunit"
   },
-  "homepage": "https://github.com/omar-haris/card-name-fit",
+  "homepage": "https://github.com/omar-haris/arabic-name-transliterator",
   "keywords": [
-    "card-name",
-    "name-fit",
-    "name-formatter",
-    "name-truncate",
-    "name-shorten",
-    "name-compress",
-    "arabic-names",
-    "latin-names",
-    "character-limit",
-    "card-printing",
-    "id-card",
-    "identity-card",
-    "bank-card",
-    "payment-card",
-    "visa",
-    "credit-card",
-    "debit-card",
-    "bank-card",
-    "security-card",
-    "php-library"
+    "arabic",
+    "transliteration",
+    "transliterate",
+    "transliterator",
+    "transliterator",
+    "arabic-transliterator",
+    "arabic-name-transliterator",
+    "iraqi-transliterator",
+    "iraqi-name-transliterator",
+    "arabian-transliterator",
+    "arabian-name-transliterator",
+    "arabic-transliterate",
+    "iraqi-transliterate",
+    "arabian-transliterate",
+    "english-name",
+    "english-names",
+    "english-name-transliterator",
+    "english-names-transliterator",
+    "english-name-transliterator",
+    "english-names-transliterator",
+    "arabic-to-english",
+    "iraqi-to-english",
+    "arabian-to-english",
+    "english-to-arabic",
+    "english-to-iraqi",
+    "english-to-arabian"
   ],
   "support": {
-    "issues": "https://github.com/omar-haris/card-name-fit/issues",
-    "source": "https://github.com/omar-haris/card-name-fit"
+    "issues": "https://github.com/omar-haris/arabic-name-transliterator/issues",
+    "source": "https://github.com/omar-haris/arabic-name-transliterator"
   }
 }

@@ -6,7 +6,7 @@
          cacheDirectory=".phpunit.cache"
          requireCoverageMetadata="false">
     <testsuites>
-        <testsuite name="Card Name Fit Test Suite">
+        <testsuite name="Arabic Name Transliterator Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
