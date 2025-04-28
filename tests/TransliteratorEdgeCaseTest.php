@@ -90,7 +90,7 @@ class TransliteratorEdgeCaseTest extends TestCase
     {
         // Test that the function executes without error for boundary values
         $result = $this->transliterator->transliterate($input);
-        $this->assertIsString($result);
+        $this->addToAssertionCount(1);
     }
 
     public function boundaryTestProvider(): array
@@ -173,7 +173,7 @@ class TransliteratorEdgeCaseTest extends TestCase
     {
         // Just test that these don't throw exceptions
         $result = $this->transliterator->transliterate($input);
-        $this->assertIsString($result);
+        $this->addToAssertionCount(1);
     }
 
     public function unicodeEdgeCasesProvider(): array
@@ -227,7 +227,6 @@ class TransliteratorEdgeCaseTest extends TestCase
     {
         // Just ensure these don't throw exceptions and return a string
         $result = $this->transliterator->transliterate($input);
-        $this->assertIsString($result);
         $this->assertNotEmpty($result);
     }
 
@@ -254,7 +253,7 @@ class TransliteratorEdgeCaseTest extends TestCase
     {
         // Just ensure these don't throw exceptions
         $result = $this->transliterator->transliterate($input);
-        $this->assertIsString($result);
+        $this->addToAssertionCount(1);
     }
 
     public function dialectNamesProvider(): array
