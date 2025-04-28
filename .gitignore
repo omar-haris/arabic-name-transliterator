@@ -1,0 +1,16 @@
+.idea/*
+.vscode/*
+vendor/*
+.DS_Store
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.test.local
+.phpunit.cache
+.phpunit.result.cache
+.phpunit.cache.php
+.phpunit.cache.php.swp
+.phpunit.cache.php.swp.swp
+.phpunit.cache.php.swp.swp.swp
