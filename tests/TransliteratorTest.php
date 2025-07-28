@@ -199,7 +199,7 @@ class TransliteratorTest extends TestCase
         return [
             'Full Iraqi name' => ['محمد عبد الرحمن العبد الله', 'Muhammad Abd Al-Rahman Alabd Al-lh'],
             'Name with diacritics' => ['مُحَمَّد عَلِيّ', 'Mhmd Aly'],
-            'Multi-word name partially in dictionary' => ['نور الهدى محمد علي', 'Noor Alhdى Muhammad Ali'],
+            'Multi-word name partially in dictionary' => ['نور الهدى محمد علي', 'Noor Alhda Muhammad Ali'],
         ];
     }
 
