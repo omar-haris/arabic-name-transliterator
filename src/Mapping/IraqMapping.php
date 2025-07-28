@@ -311,7 +311,7 @@ class IraqMapping extends BaseMapping
             'ظ' => 'dh','ع' => 'a', 'غ' => 'gh',
             'ف' => 'f', 'ق' => 'q', 'ك' => 'k',
             'ل' => 'l', 'م' => 'm', 'ن' => 'n',
-            'ه' => 'h', 'و' => 'w', 'ي' => 'y',
+            'ه' => 'h', 'و' => 'w', 'ي' => 'y', 'ى' => 'a',
 
             // Extra Persian letters (used in some Iraqi contexts)
             'چ' => 'ch', // e.g., "چاي" → "chai"
